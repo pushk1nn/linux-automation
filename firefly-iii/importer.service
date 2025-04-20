@@ -1,0 +1,15 @@
+[Unit]
+Description=Firefly III Importer Automation
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=shaihulud
+WorkingDirectory=/home/shaihulud/firefly-iii
+ExecStart=/home/shaihulud/firefly-iii/import-csv.sh
+
+[Install]
+WantedBy=multi-user.target
