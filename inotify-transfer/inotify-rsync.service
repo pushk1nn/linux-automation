@@ -1,0 +1,15 @@
+[Unit]
+Description=Transmission Download Exporter Service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=shaihulud
+WorkingDirectory=/opt/transmission/data/completed/books
+ExecStart=/home/shaihulud/linux-automation/inotify-transfer/inotify-rsync.sh
+
+[Install]
+WantedBy=multi-user.target
