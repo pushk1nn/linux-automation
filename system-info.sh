@@ -33,4 +33,19 @@ connections=$(netstat -an | awk 'NR==2 {print} /\<ESTABLISHED\>/ {print}' )
 
 printf "[+] MAC: \n%s\n[+] IP: \n%s\n[+] Promiscuous?: \n%s\n[+] Connections: \n%s\n" "$mac" "$ip" "$promisc" "$connections"
 
-echo -e "\n"
+echo -e "\n----\tUSERS\t----"
+
+current_users=$(who)
+login_history=$(last -n 30)
+users_pid_0=$(awk -F: '($3 == 0) {print $1}' /etc/passwd)
+root_suid=$(find / -uid 0 -perm -4000 -type f 2>/dev/null)
+
+printf "[+] Current Users: \n%s\n[+] Login History (30 entries): \n%s\n[+] PID 0 Users: \n%s\n[+] Root SUID Files: \n%s\n" "$current_users" "$login_history" "$users_pid_0" "$root_suid"
+
+echo -e "\n----\tPROCESSES\t----"
+
+ps=$(ps -ef --forest)
+nc=$(lsof -c nc)
+del=$(lsof +L1)
+
+printf "[+] All Processes: \n%s\n[+] Files Opened by nc: \n%s\n[+] Deleted Files: \n%s\n" "$ps" "$nc" "$del" 
