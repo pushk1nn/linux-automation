@@ -29,7 +29,8 @@ echo -e "\n----\tNETWORKING\t----"
 mac=$(ip -c a | awk '/^[0-9]+:/ {gsub(/:/, "", $2); iface=$2 } /link\/ether/ {print iface, $2}')
 ip=$(ip -c a | awk '/^[0-9]+:/ {gsub(/:/, "", $2); iface=$2 } $1=="inet" {gsub(/\/[0-9]{1,2}/, "", $2); print iface, $2}')
 promisc=$(ip -d link show | awk '/^[0-9]+:/ {gsub(/:/, "", $2); iface=$2 } match($0, /\<promiscuity\>[[:space:]]+([0-9]+)/, arr) {print iface, "is",  arr[1]==0 ? "not" : "\b", "promiscuous"}')
+connections=$(netstat -an | awk 'NR==2 {print} /\<ESTABLISHED\>/ {print}' )
 
-printf "[+] MAC: \n%s\n[+] IP: \n%s\n[+] Promiscuous?: \n%s\n[+] Connections: \n%s\n" "$mac" "$ip" "$promisc" "f"
+printf "[+] MAC: \n%s\n[+] IP: \n%s\n[+] Promiscuous?: \n%s\n[+] Connections: \n%s\n" "$mac" "$ip" "$promisc" "$connections"
 
 echo -e "\n"
