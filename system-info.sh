@@ -49,3 +49,13 @@ nc=$(lsof -c nc)
 del=$(lsof +L1)
 
 printf "[+] All Processes: \n%s\n[+] Files Opened by nc: \n%s\n[+] Deleted Files: \n%s\n" "$ps" "$nc" "$del" 
+
+echo -e "\n----\tPROCESSES\t----"
+
+mod=$(find ~ -type f -mtime -1)
+cron=$(crontab -u root -l)
+bashrc=$(cat ~/.bashrc)
+keys=$(cat ~/.ssh/authorized_keys)
+bins=$(find /bin /sbin /usr/bin /usr/sbin -type f -mtime -2)
+
+printf "[+] Modified Files (Home): \n%s\n[+] Modified Files (System Binaries): \n%s\n[+] Root Cronjobs: \n%s\n[+] User .bashrc: \n%s\n [+] Authorized SSH Keys: \n%s\n" "$mod" "$bins" "$cron" "$bashrc" "$keys" 
